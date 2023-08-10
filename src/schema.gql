@@ -1,0 +1,66 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  created_At: String!
+  deleted_At: String!
+  image: [JSONObject!]!
+  isActive: Boolean!
+  modified_At: String!
+  password: String!
+  roles: [String!]!
+  username: String!
+}
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+type LoginResponse {
+  access_token: String!
+  image_path: String!
+  user: User!
+}
+
+input LoginUserInput {
+  password: String!
+  username: String!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(registerUserInput: RegisterUserInput!): User!
+}
+
+type Query {
+  user(imagesize: String!, username: String!): User!
+  users: [User!]!
+}
+
+input RegisterUserInput {
+  created_at: String! = "2023-08-09T09:10:14.311Z"
+  deleted_At: String! = ""
+  image: Upload!
+  isActive: Boolean = false
+  modified_At: String! = ""
+  password: String!
+  roles: [String!]! = ["user"]
+  username: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type User {
+  created_At: String!
+  deleted_At: String!
+  id: String!
+  image: [JSONObject!]!
+  isActive: Boolean!
+  modified_At: String!
+  roles: [String!]!
+  username: String!
+}
