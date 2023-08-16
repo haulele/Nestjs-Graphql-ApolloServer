@@ -6,6 +6,8 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
+import { UpdateUserInput } from './dto/update-user.input';
+import { UserPagination } from './entities/user.pagination';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -16,12 +18,23 @@ export class UsersResolver {
     return this.usersService.createUser(createUserInput);
   } 
 
+  @Mutation(() => User)
+  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput,
+  @Args('userId') userId: string): Promise<User>{
+    return this.usersService.updateUser( userId,updateUserInput);
+  } 
 
-  @Query(() => [User], { name: 'users' })
+  @Mutation(() => User)
+  deleteUser(@Args('userId') userId: string){
+    return this.usersService.deleteUser(userId);
+  } 
+
+  @Query(() => UserPagination, { name: 'users' })
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Admin)
-  findAll() {
-    return this.usersService.findAll();
+  async findAll() {
+    const result = await this.usersService.findAll();
+    return result;
   }
 
   

@@ -1,12 +1,13 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
 import { GraphQLJSONObject } from 'graphql-type-json'
+import { ObjectId } from 'mongodb';
 @Entity()
 @ObjectType()
 export class User {
   @ObjectIdColumn()
   @Field(() => String)
-  id: string;
+  _id: ObjectId;
 
   @Column()
   @Field()

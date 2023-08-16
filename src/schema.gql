@@ -31,17 +31,19 @@ input LoginUserInput {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  deleteUser(userId: String!): User!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   signup(registerUserInput: RegisterUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!, userId: String!): User!
 }
 
 type Query {
   user(imagesize: String!, username: String!): User!
-  users: [User!]!
+  users: UserPagination!
 }
 
 input RegisterUserInput {
-  created_at: String! = "2023-08-09T09:10:14.311Z"
+  created_at: String! = "2023-08-16T09:05:43.841Z"
   deleted_At: String! = ""
   image: Upload!
   isActive: Boolean = false
@@ -51,16 +53,41 @@ input RegisterUserInput {
   username: String!
 }
 
+input UpdateUserInput {
+  created_At: String
+  deleted_At: String
+  image: [JSONObject!]
+  isActive: Boolean
+  modified_At: String! = "2023-08-16T09:05:25.329Z"
+  password: String
+  roles: [String!]
+  username: String!
+}
+
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 type User {
+  _id: String!
   created_At: String!
   deleted_At: String!
-  id: String!
   image: [JSONObject!]!
   isActive: Boolean!
   modified_At: String!
   roles: [String!]!
   username: String!
+}
+
+type UserPagination {
+  items: [User!]!
+  links: String
+  meta: UserPaginationMeta!
+}
+
+type UserPaginationMeta {
+  currentPage: Int!
+  itemCount: Int!
+  itemsPerPage: Int!
+  totalItems: Int!
+  totalPages: Int!
 }

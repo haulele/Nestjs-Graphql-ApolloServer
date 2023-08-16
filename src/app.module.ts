@@ -8,6 +8,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import typeOrmConfig from './typeORM.config';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { RolesGuard } from './auth/guard/role.guard';
+import { MailModule } from './mail/mail.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -18,6 +20,10 @@ import { RolesGuard } from './auth/guard/role.guard';
   UsersModule,  
   AuthModule,
   TypeOrmModule.forRoot(typeOrmConfig),
+  MailModule,
+  ConfigModule.forRoot({
+    isGlobal: true, // no need to import into other modules
+  }),
 ],
 providers: [
   {

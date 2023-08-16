@@ -5,7 +5,7 @@ import { RegisterUserInput } from './dto/register-user';
 import { User } from 'src/users/entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { LocalFileService } from 'src/files/file.service';
-import { LoginUserInput } from './dto/login-user';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +13,7 @@ export class AuthService {
         private usersService: UsersService,
         private jwtService: JwtService,
         private localFile: LocalFileService,
+        private mailService: MailService,
       ) {}
 
     async validateUser(username: string, password: string): Promise<any>{
@@ -32,7 +33,7 @@ export class AuthService {
         return {
             access_token: this.jwtService.sign({
                 user_name: user.username,
-                user_id: user.id,
+                user_id: user._id,
             }),
             user,
         }
@@ -44,6 +45,8 @@ export class AuthService {
             throw new Error('User already exists!');
         }   
 
+        const confirmationCode = Math.floor(100000 + Math.random() * 900000).toString();
+        await this.mailService.sendUserConfirmation(registerUserInput.username, confirmationCode);
         const password = await bcrypt.hash(registerUserInput.password, 10);    
         const {filename} = await registerUserInput.image;
         const image = await this.localFile.uploadFile(await registerUserInput.image, filename );
