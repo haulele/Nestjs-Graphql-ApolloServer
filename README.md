@@ -42,8 +42,8 @@ $ Query
 mutation signup($file: Upload!) {
   signup(
     registerUserInput: {
-      username: "hau0700000"
-      password: "Fffssss"
+      username: "example@gmail.com"
+      password: "example"
       image: $file
     }
   ) {
@@ -79,8 +79,8 @@ $ Variables
 ```bash
 {
   "input":  {
-    "username": "hau0700000",
-    "password": "Fffssss"
+    "username": "example@gmail.com",
+    "password": "example"
   }
 }
 ```
