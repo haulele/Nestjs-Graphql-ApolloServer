@@ -135,7 +135,7 @@ query GetUser($username: String!, $imagesize: String!) {
 $ Variables
 ```bash
 {
-  "username": "hau0700000",
+  "username": "example@gmail.com",
   "imagesize": "M"
 }
 ```
