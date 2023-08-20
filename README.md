@@ -87,14 +87,26 @@ $ Variables
 ## Get Users 
 $ Query 
 ```bash
-query{
-  users{
-    username
-    isActive
-    id
-    created_At
-    deleted_At
-    image
+query {
+  users {
+    items {
+      _id
+      created_At
+      deleted_At
+      image
+      isActive
+      modified_At
+      roles
+      username
+    }
+    links
+    meta {
+      currentPage
+      itemCount
+      itemsPerPage
+      totalItems
+      totalPages
+    }
   }
 }
 ```
@@ -109,7 +121,7 @@ $ Query
 ```bash
 query GetUser($username: String!, $imagesize: String!) {
   user(username: $username, imagesize: $imagesize) {
-    id
+    _id
     username
     roles
     image
